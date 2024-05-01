@@ -8,7 +8,7 @@ function vk_msg_send($peer_id, $text){
       'message' => $text,
       'attachment' => $attachment,
       'peer_id' => $peer_id,
-      'access_token' => 'vk1.a.lHdHYy4juc-2551E95IC2nndS5TVFBp2iMGowmQu0URZP7bpz7YYmhEiHZo3VcdD4wKVmXaCsZ0pI4OWjkvkzFYsSpFuPN49MlV7KN8FwiWO9J3F6cJoULeD-UtLs4a1s8c0_o2K4UrXLCWg4UJdldCXNAJ4tLp75_-luYmdHj4kKKRplxXre_j5WeDVZyGhs2nbbrJaxdwpwrXbxPFp-A',
+      'access_token' => 'vk1.a.U15hkbT6SlIp3em6o6xbkKt1KRLiK9toLMtoAuWHAokOGwD4gnQENpXNPHMSlcTdXa7LZ2iHAnpDy6KhjkymI0JP1BdSGazsQ37dQ41D9cluAnbaKdL7EbYYUy9bUzG8-JGoPDDVpEZb6GtJ2nQUdaKHv1lGpG6ssLzIDDvLAUl7HKhkU9yLLewMlDMYEX7mbOwq5p4Oo3toT_pZ_rK_Sg',
       'v' => '5.89'
     );
     
