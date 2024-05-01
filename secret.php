@@ -1,7 +1,7 @@
 <?php
-$confirmationToken = '89c8dfd3';
+$confirmationToken = 'd534977f';
 $secretKey = 'nedobovlayteserveradebili';    
-// Ôóíêöèÿ îòïðàâëÿþùàÿ ñîîáùåíèÿ
+// Ð¤ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÑŽÑ‰Ð°Ñ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ
 function vk_msg_send($peer_id, $text){
     
     $request_params = array(
@@ -15,45 +15,45 @@ function vk_msg_send($peer_id, $text){
     $get_params = http_build_query($request_params); 
     file_get_contents('https://api.vk.com/method/messages.send?' . $get_params);
 }
-$data = json_decode(file_get_contents('php://input')); // Ïîëó÷àåì äàííûå ñ ÂÊ
+$data = json_decode(file_get_contents('php://input')); // ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ñ Ð’Ðš
 if(strcmp($data->secret, $secretKey) !== 0 && strcmp($data->type, 'confirmation') !== 0) {
     return;
 }
 switch ($data->type) {  
     case 'confirmation': 
-        echo $confirmationToken; // Åñëè ÂÊ çàïðàøèâàåò ïîäòâåðæäåíèå, òî âûâîäèì êîä ïîäòâåðæäåíèÿ 
+        echo $confirmationToken; // Ð•ÑÐ»Ð¸ Ð’Ðš Ð·Ð°Ð¿Ñ€Ð°ÑˆÐ¸Ð²Ð°ÐµÑ‚ Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ðµ, Ñ‚Ð¾ Ð²Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ ÐºÐ¾Ð´ Ð¿Ð¾Ð´Ñ‚Ð²ÐµÑ€Ð¶Ð´ÐµÐ½Ð¸Ñ 
     break;  
         
     case 'message_new':
-        // Åñëè ñîáûòèå íîâîãî ñîîáùåíèÿ, òî ïîëó÷àåì åãî òåêñò
+        // Ð•ÑÐ»Ð¸ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð³Ð¾ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ, Ñ‚Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ ÐµÐ³Ð¾ Ñ‚ÐµÐºÑÑ‚
         $message_text = $data->object->text;
         $peer_id = $data->object->peer_id;
         
-        $message_text = mb_strtolower($message_text, 'UTF-8'); // Ïåðåâîäèì òåêñò ê íèæíåìó ðåãèñòðó
+        $message_text = mb_strtolower($message_text, 'UTF-8'); // ÐŸÐµÑ€ÐµÐ²Ð¾Ð´Ð¸Ð¼ Ñ‚ÐµÐºÑÑ‚ Ðº Ð½Ð¸Ð¶Ð½ÐµÐ¼Ñƒ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ñƒ
         
-        // Åñëè ñîîáùåíèå ñîäåðæèò ïîäñòðîêó ïðèâåò, îòïðàâëÿåì ñîîáùåíèå
-        if(strpos($message_text, "íà÷àòü") !== false){
-            vk_msg_send($peer_id, "Ïðèâåò! ÿ áîò ãðóïïû: /help");
+        // Ð•ÑÐ»Ð¸ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð¿Ð¾Ð´ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð¿Ñ€Ð¸Ð²ÐµÑ‚, Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ
+        if(strpos($message_text, "Ð½Ð°Ñ‡Ð°Ñ‚ÑŒ") !== false){
+            vk_msg_send($peer_id, "ÐŸÑ€Ð¸Ð²ÐµÑ‚! Ñ Ð±Ð¾Ñ‚ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹: /help");
         }
         if(strpos($message_text, "/help") !== false){
-            vk_msg_send($peer_id, "Ìîè êîìàíäû:
-                                    /report - ðåïîðò
-                                    /obnows - óçíàòü îá îáíîâëåíèè!
-                                    /play - èãðû (áåñïëàòíûå)");
+            vk_msg_send($peer_id, "ÐœÐ¾Ð¸ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹:
+                                    /report - Ñ€ÐµÐ¿Ð¾Ñ€Ñ‚
+                                    /obnows - ÑƒÐ·Ð½Ð°Ñ‚ÑŒ Ð¾Ð± Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ð¸!
+                                    /play - Ð¸Ð³Ñ€Ñ‹ (Ð±ÐµÑÐ¿Ð»Ð°Ñ‚Ð½Ñ‹Ðµ)");
         }
         if(strpos($message_text, "/report") !== false){
-            vk_msg_send($peer_id, "[×àêî]: Àäìèíèñòðàòîð óæå â ïóòè! Îæèäàéòå îòâåò ÷åðåç 5-30 ìèíóò");
+            vk_msg_send($peer_id, "[Ð§Ð°ÐºÐ¾]: ÐÐ´Ð¼Ð¸Ð½Ð¸ÑÑ‚Ñ€Ð°Ñ‚Ð¾Ñ€ ÑƒÐ¶Ðµ Ð² Ð¿ÑƒÑ‚Ð¸! ÐžÐ¶Ð¸Ð´Ð°Ð¹Ñ‚Ðµ Ð¾Ñ‚Ð²ÐµÑ‚ Ñ‡ÐµÑ€ÐµÐ· 5-30 Ð¼Ð¸Ð½ÑƒÑ‚");
         }
         if(strpos($message_text, "/obnows") !== false){
-            vk_msg_send($peer_id, "[×àêî]: Îáíîâà âûõîäèò êàæäóþ íåäåëþ â ñðóäó èëè æå â ÷åòâåðã! Ñ óâàæåíèåì áîò ãðóïïû!");
+            vk_msg_send($peer_id, "[Ð§Ð°ÐºÐ¾]: ÐžÐ±Ð½Ð¾Ð²Ð° Ð²Ñ‹Ñ…Ð¾Ð´Ð¸Ñ‚ ÐºÐ°Ð¶Ð´ÑƒÑŽ Ð½ÐµÐ´ÐµÐ»ÑŽ Ð² ÑÑ€ÑƒÐ´Ñƒ Ð¸Ð»Ð¸ Ð¶Ðµ Ð² Ñ‡ÐµÑ‚Ð²ÐµÑ€Ð³! Ð¡ ÑƒÐ²Ð°Ð¶ÐµÐ½Ð¸ÐµÐ¼ Ð±Ð¾Ñ‚ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹!");
         }
         if(strpos($message_text, "/play") !== false){
-            vk_msg_send($peer_id, "[×àêî]: Ãî ïîèãðàåì â èãðó Äà/íåò");
-            vk_msg_send($peer_id, "[×àêî]: Íàçûâàé ëþáûå Õî÷ó è ÿ áóäó ãîâîðèòü Äà èëè æå Íåò");
+            vk_msg_send($peer_id, "[Ð§Ð°ÐºÐ¾]: Ð“Ð¾ Ð¿Ð¾Ð¸Ð³Ñ€Ð°ÐµÐ¼ Ð² Ð¸Ð³Ñ€Ñƒ Ð”Ð°/Ð½ÐµÑ‚");
+            vk_msg_send($peer_id, "[Ð§Ð°ÐºÐ¾]: ÐÐ°Ð·Ñ‹Ð²Ð°Ð¹ Ð»ÑŽÐ±Ñ‹Ðµ Ð¥Ð¾Ñ‡Ñƒ Ð¸ Ñ Ð±ÑƒÐ´Ñƒ Ð³Ð¾Ð²Ð¾Ñ€Ð¸Ñ‚ÑŒ Ð”Ð° Ð¸Ð»Ð¸ Ð¶Ðµ ÐÐµÑ‚");
             }
         }
         
-        echo 'ok'; // Îáÿçàòåëüíî óâåäîìëÿåì ñåðâåð, ÷òî ñîîáùåíèå ïîëó÷åíî, òåêñòîì ok
+        echo 'ok'; // ÐžÐ±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ ÑƒÐ²ÐµÐ´Ð¾Ð¼Ð»ÑÐµÐ¼ ÑÐµÑ€Ð²ÐµÑ€, Ñ‡Ñ‚Ð¾ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¾, Ñ‚ÐµÐºÑÑ‚Ð¾Ð¼ ok
     break;
 }
 ?>
